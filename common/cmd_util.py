@@ -15,6 +15,7 @@ def dm_control_parser():
     parser = arg_parser()
     parser.add_argument('--domain_name', help='Domain Name', type=str, default='hopper')
     parser.add_argument('--task_name', help='Task Name', type=str, default='hop')
-    parser.add_argument('--num_timesteps', type=int, default=int(10e4))
+    parser.add_argument('--num_timesteps', type=int, default=int(1e6))
     parser.add_argument('--use_pixels', help='Use rgb instead of low dim state rep?', type=bool, default=False)
+    parser.add_argument('--seed', help='RNG seed', type=int, default=0)
     return parser
