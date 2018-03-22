@@ -13,7 +13,8 @@ def dm_control_parser():
         Create an argparse.ArgumentParser for DM Control.
         """
     parser = arg_parser()
-    parser.add_argument('--domain_name', help='Domain Name', type=str, default='cartpole')
-    parser.add_argument('--task_name', help='Task Name', type=str, default='swingup')
+    parser.add_argument('--domain_name', help='Domain Name', type=str, default='hopper')
+    parser.add_argument('--task_name', help='Task Name', type=str, default='hop')
     parser.add_argument('--num_timesteps', type=int, default=int(10e4))
+    parser.add_argument('--use_pixels', help='Use rgb instead of low dim state rep?', type=bool, default=False)
     return parser
