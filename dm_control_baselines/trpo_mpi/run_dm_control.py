@@ -47,7 +47,7 @@ def train(args, seed):
 def main():
     args = dm_control_parser().parse_args()
 
-    logger.configure()
+    logger.configure(dir='/tmp', format_strs=['tensorboard', 'csv'])
 
     train(args, seed=args.seed)
 
