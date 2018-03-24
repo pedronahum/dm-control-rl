@@ -26,13 +26,13 @@ def train(args, seed):
     # Iterate over a task set:
     for domain_name, task_name in suite.BENCHMARKING:
         env = suite.load(domain_name, task_name)
+    # TODO: Implement a way to add seeds
+    # env = env.random(workerseed)
 
-    # TODO: Allow orientations, heights and velocity inputs as well...
     if args.use_pixels:
         env = PixelsEnv(env)
     else:
         env = BasicEnv(env)
-
 
     def policy_fn(name, ob_space, ac_space):
         return MlpPolicy(name=name, ob_space=ob_space, ac_space=ac_space,

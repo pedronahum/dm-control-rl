@@ -16,7 +16,7 @@ class PixelsEnv(environment.Base):
         screen_depth_dm = observation_dm.shape[2]
         self.observation_space = Box(low=0, high=255, shape=(screen_height_dm, screen_width_dm, screen_depth_dm),
                                      dtype=np.uint8)
-        self.action_space = Box(action_spec.minimum, action_spec.maximum, dtype='float32')
+        self.action_space = Box(action_spec.minimum, action_spec.maximum, dtype=np.float32)
         self.random_action = np.random.uniform(action_spec.minimum,
                                                action_spec.maximum,
                                                size=action_spec.shape)
@@ -30,7 +30,7 @@ class PixelsEnv(environment.Base):
 
     def step(self, action):
         time_step = self._env.step(action)
-        return time_step.observation["pixels"], time_step.reward, time_step.last(), None
+        return time_step.observation["pixels"], np.float32(time_step.reward), time_step.last(), None
 
     def observation_spec(self):
         return self.observation_space

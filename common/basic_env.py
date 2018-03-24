@@ -12,7 +12,7 @@ def process_observation(observation):
                 ob_space.append(i)
         else:
             ob_space.append(value)
-    return array(ob_space)
+    return array(ob_space, dtype=np.float32)
 
 
 class BasicEnv(environment.Base):
@@ -26,7 +26,7 @@ class BasicEnv(environment.Base):
 
         self.observation_space = Box(low=-np.inf, high=np.inf, shape=ob_space.shape,
                                      dtype=np.uint8)
-        self.action_space = Box(action_spec.minimum, action_spec.maximum, dtype='float32')
+        self.action_space = Box(action_spec.minimum, action_spec.maximum, dtype=np.float32)
         self.random_action = np.random.uniform(action_spec.minimum,
                                                action_spec.maximum,
                                                size=action_spec.shape)
@@ -40,7 +40,7 @@ class BasicEnv(environment.Base):
 
     def step(self, action):
         time_step = self._env.step(action)
-        return process_observation(time_step.observation), time_step.reward, time_step.last(), None
+        return process_observation(time_step.observation), np.float32(time_step.reward), time_step.last(), None
 
     def observation_spec(self):
         return self.observation_space
