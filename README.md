@@ -11,7 +11,7 @@ implemented: acktr, ppo, and trpo. Goal is to continue adding more RL algorithms
 
 In the next few days, I will write a setup.py. Currently I am just testing the code from the PyCharm terminal. 
 
-To visualize the domains and task, please have a look at quick_start.py
+To visualize the domains and tasks, please have a look at quick_start.py
 
 <img src="img/quickstart.gif" alt="random hopper-hop" width="267" height="200"/>
 
