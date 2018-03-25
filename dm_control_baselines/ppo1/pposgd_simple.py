@@ -4,6 +4,7 @@ import baselines.common.tf_util as U
 import tensorflow as tf
 import numpy as np
 import time
+import common.tf_helpers as tf_help
 from baselines.common.mpi_adam import MpiAdam
 from baselines.common.mpi_moments import mpi_moments
 from mpi4py import MPI
@@ -12,7 +13,7 @@ from collections import deque
 
 def traj_segment_generator(pi, env, horizon, stochastic):
     t = 0
-    ac = env.random_action # not used, just so we have the datatype
+    ac = env.random_action  # not used, just so we have the datatype
     new = True  # marks if we're on first timestep of an episode
     ob = env.reset()
 
@@ -103,7 +104,8 @@ def learn(env, policy_fn, *,
     atarg = tf.placeholder(dtype=tf.float32, shape=[None])  # Target advantage function (if applicable)
     ret = tf.placeholder(dtype=tf.float32, shape=[None])  # Empirical return
 
-    lrmult = tf.placeholder(name='lrmult', dtype=tf.float32, shape=[])  # learning rate multiplier, updated with schedule
+    lrmult = tf.placeholder(name='lrmult', dtype=tf.float32,
+                            shape=[])  # learning rate multiplier, updated with schedule
     clip_param = clip_param * lrmult  # Annealed cliping parameter epislon
 
     ob = U.get_placeholder_cached(name="ob")
@@ -221,6 +223,22 @@ def learn(env, policy_fn, *,
         logger.record_tabular("TimeElapsed", time.time() - tstart)
         if MPI.COMM_WORLD.Get_rank() == 0:
             logger.dump_tabular()
+
+        # https://github.com/praveen-palanisamy/baselines/blob/9118091580224ed8656841277d787707e9b545ca/baselines/ppo1/pposgd_simple.py
+        # Save model after every 500 iters if a file name to save is given
+        import os
+
+        if iters_so_far == 1:
+            basePath = os.path.dirname(os.path.abspath(__file__))
+            modelF = basePath + '/' + 'pposgd' + "_afterIter_" + str(iters_so_far) + ".model"
+            tf_help.save_state(modelF)
+            logger.log("Saved model to file :{}".format(modelF))
+
+        if iters_so_far % 100 == 0:
+            basePath = os.path.dirname(os.path.abspath(__file__))
+            modelF = basePath + '/models' + 'pposgd' + "_afterIter_" + str(iters_so_far) + ".model"
+            tf_help.save_state(modelF)
+            logger.log("Saved model to file :{}".format(modelF))
 
 
 def flatten_lists(listoflists):

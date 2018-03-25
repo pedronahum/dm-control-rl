@@ -12,6 +12,7 @@ from baselines.common import tf_util as U
 def train(args, env):
     from dm_control_baselines.ppo1 import pposgd_simple, cnn_policy, mlp_policy
     U.make_session(num_cpu=1).__enter__()
+
     if args.use_pixels:
 
         def policy_fn(name, ob_space, ac_space):
