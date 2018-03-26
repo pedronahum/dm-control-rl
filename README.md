@@ -13,7 +13,7 @@ In the next few days, I will write a setup.py. Currently I am just testing the c
 
 To visualize the domains and tasks, please have a look at quick_start.py
 
-<img src="img/quickstart.gif" alt="random hopper-hop" width="267" height="200"/>
+<img src="img/quickstart.gif" alt="random hopper-hop" width="267" height="200"/> <img src="img/quickstart-humanoid-run.gif" alt="humanoid-run" width="284" height="200"/>
 
 The code has been tested with Python 3.5.4:
 * tensorflow==1.5.0

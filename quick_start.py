@@ -5,14 +5,10 @@ from moviepy.editor import ImageSequenceClip
 import numpy as np
 
 
-def main():
-    args = dm_control_parser().parse_args()
+def main(args):
+
     # Load one task:
     env = suite.load(domain_name=args.domain_name, task_name=args.task_name)
-
-    # Iterate over a task set:
-    for domain_name, task_name in suite.BENCHMARKING:
-        env = suite.load(domain_name, task_name)
 
     # Wrap the environment to obtain the pixels
     env = pixels.Wrapper(env, pixels_only=False)
@@ -31,8 +27,9 @@ def main():
         observation_matrix.append(observation_dm)
 
     clip = ImageSequenceClip(observation_matrix, fps=50)
-    clip.write_gif("img/quickstart.gif")
+    clip.write_gif("img/quickstart-humanoid-run.gif")
 
 
 if __name__ == '__main__':
-    main()
+    arg = dm_control_parser().parse_args()
+    main(arg)

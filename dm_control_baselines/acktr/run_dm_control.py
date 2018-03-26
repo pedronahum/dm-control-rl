@@ -36,10 +36,6 @@ def main():
 
     env = suite.load(domain_name=args.domain_name, task_name=args.task_name)
 
-    # Iterate over a task set:
-    for domain_name, task_name in suite.BENCHMARKING:
-        env = suite.load(domain_name, task_name)
-
     if args.use_pixels:
         env = PixelsEnv(env)
     else:

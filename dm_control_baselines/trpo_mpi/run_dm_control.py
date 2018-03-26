@@ -23,9 +23,6 @@ def train(args, seed):
     workerseed = seed + 10000 * MPI.COMM_WORLD.Get_rank()
     env = suite.load(domain_name=args.domain_name, task_name=args.task_name)
 
-    # Iterate over a task set:
-    for domain_name, task_name in suite.BENCHMARKING:
-        env = suite.load(domain_name, task_name)
     # TODO: Implement a way to add seeds
     # env = env.random(workerseed)
 
